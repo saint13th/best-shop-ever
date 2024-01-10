@@ -8,6 +8,6 @@ export class AppController {
   @Get()
   @Render('index.hbs')
   root() {
-    return { message: 'Hello, user!' };
+    return { user: {} };
   }
 }
