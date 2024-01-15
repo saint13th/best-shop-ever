@@ -19,7 +19,7 @@ export class ProductController {
 
   @Get(':name')
   @Render('products-item.ejs')
-  findOne(@Param('name') name: string) {
+  findOneByName(@Param('name') name: string) {
     return this.productService.findOne(name);
   }
 

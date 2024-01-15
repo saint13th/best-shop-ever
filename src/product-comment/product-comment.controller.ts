@@ -13,7 +13,9 @@ export class ProductCommentController {
 
   @Post()
   create(@Body() createProductCommentDto: CreateProductCommentDto) {
-    return this.productCommentService.create(createProductCommentDto);
+    const userName = ''; // TODO: userName
+
+    return this.productCommentService.create(createProductCommentDto, userName);
   }
 
   @Get(':productName')
