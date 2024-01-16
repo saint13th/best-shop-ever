@@ -14,6 +14,7 @@ export class ProductCommentService {
     ) {
     }
 
+
     async create(
         createProductCommentDto: CreateProductCommentDto,
         userName: string
@@ -27,7 +28,7 @@ export class ProductCommentService {
         return this.productModel.findOneAndUpdate({name: productName}, {
             $push: {
                 comments: {
-                    user: userName,
+                    userName,
                     text: commentText,
                 }
             }

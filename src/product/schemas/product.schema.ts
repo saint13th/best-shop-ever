@@ -34,7 +34,8 @@ export class Product {
 
   @Prop()
   comments?: {
-    user: string;
+    userId: string;
+    userName: string;
     text: string;
   }[]
 }

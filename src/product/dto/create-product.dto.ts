@@ -30,7 +30,8 @@ export class CreateProductDto {
 
   @IsOptional()
   comments: {
-    user: string;
+    userId: string;
+    userName: string;
     text: string;
   }[];
 }

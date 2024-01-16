@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Render, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Render, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { ProductCommentService } from './product-comment.service';
 import { CreateProductCommentDto } from './dto/create-product-comment.dto';
 import { UpdateProductCommentDto } from './dto/update-product-comment.dto';
 import { ProductService } from 'src/product/product.service';
+import { AuthGuard } from "../auth/guards/auth.guard";
 
 @Controller('product-comment')
 export class ProductCommentController {
