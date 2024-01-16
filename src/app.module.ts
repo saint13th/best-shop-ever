@@ -8,7 +8,6 @@ import { UserModule } from './user/user.module';
 import { MainModule } from './main/main.module';
 import { ProductCommentModule } from './product-comment/product-comment.module';
 import { CartModule } from './cart/cart.module';
-import { AdminModule } from './admin/admin.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
@@ -25,7 +24,6 @@ import { AuthModule } from './auth/auth.module';
     MainModule,
     ProductCommentModule,
     CartModule,
-    AdminModule,
     AuthModule,
   ],
   controllers: [],
