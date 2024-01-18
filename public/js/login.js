@@ -14,25 +14,17 @@ loginForm.addEventListener("submit", async (e) => {
         }
         const url = getUrl();
 
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({
-                email,
-                password,
-            })
-        });
+        const { result, error } = await fetchData({ method: 'POST', url, params: {
+            email,
+            password,
+        }})
 
-        if (!response.ok) {
-            throw new Error(`${response.status} ${response.statusText}`);
+        if (error) {
+            loginError.innerHTML = error;
+
+            return;
         }
-
-        if (response.error) {
-            throw new Error(response.error.message);
-        }
-
+    
         loginError.innerHTML = '';
         window.location.pathname = '/';
     } catch (error) {

@@ -42,6 +42,6 @@ export class ProductService {
   }
 
   async remove(id: string) {
-    return this.productModel.findByIdAndDelete(id);
+    return await this.productModel.findByIdAndDelete(id);
   }
 }
