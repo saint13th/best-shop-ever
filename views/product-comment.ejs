@@ -1,0 +1,110 @@
+<div class="bg-white">
+    <div class="pt-6">
+        <nav aria-label="Breadcrumb">
+            <ol role="list" class="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+                <li>
+                    <div class="flex items-center">
+                        <a href="/" class="mr-2 text-sm font-medium text-gray-900">Главная</a>
+                        <svg width="16" height="20" viewBox="0 0 16 20" fill="currentColor" aria-hidden="true"
+                            class="h-5 w-4 text-gray-300">
+                            <path d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z" />
+                        </svg>
+                    </div>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <a href="/products/<%= productName %>" class="mr-2 text-sm font-medium text-gray-900">
+                            <%= productTitle %>
+                        </a>
+                        <svg width="16" height="20" viewBox="0 0 16 20" fill="currentColor" aria-hidden="true"
+                            class="h-5 w-4 text-gray-300">
+                            <path d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z" />
+                        </svg>
+                    </div>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <a href="#" class="mr-2 text-sm font-medium text-gray-900">
+                            Отзывы
+                        </a>
+                    </div>
+                </li>
+            </ol>
+        </nav>
+        <div class="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-1 lg:gap-x-8 lg:px-8">
+
+            <% for(var i=0; i < comments.length; i++) { %>
+                <article class="mb-4">
+                    <div class="flex items-center">
+                        <img class="w-10 h-10 me-4" src="/docs/images/people/profile-picture-5.jpg" alt="">
+                        <div class="font-medium dark:text-white">
+                            <p>
+                                <%= comments[i].user %>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-center mt-2 space-x-1 rtl:space-x-reverse">
+                        <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor" viewBox="0 0 22 20">
+                            <path
+                                d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                        </svg>
+                        <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor" viewBox="0 0 22 20">
+                            <path
+                                d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                        </svg>
+                        <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor" viewBox="0 0 22 20">
+                            <path
+                                d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                        </svg>
+                        <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor" viewBox="0 0 22 20">
+                            <path
+                                d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                        </svg>
+                        <svg class="w-4 h-4 text-gray-300 dark:text-gray-500" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                            <path
+                                d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                        </svg>
+
+                    </div>
+                    <footer class="mb-5 text-sm text-gray-500 dark:text-gray-400">
+
+                    </footer>
+                    <p class="mt-2 text-gray-500 dark:text-gray-400">
+                        <%= comments[i].text %>
+                    </p>
+
+                </article>
+                <% } %>
+
+                    <div class="flex items-center justify-center">
+                        <form id="commentsForm" data-product="<%= productName %>"
+                            class="w-full bg-white rounded-lg pt-2">
+                            <div class="mb-6">
+                                <span class="text-red-500" id="commentError"></span>
+                                <h2 class="pt-3 pb-2 text-gray-800 text-lg text-center">Добавление комментария</h2>
+                                <div class="w-full md:w-full mb-2 mt-2">
+                                    <textarea id="comment"
+                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        name="body" placeholder='Добавьте ваш комментарий' required></textarea>
+                                </div>
+                                <div class="w-full mt-2 items-start md:w-full">
+                                    <div class="-mr-1">
+                                        <button type="submit"
+                                            class="flex w-1/2 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                                            Добавить комментарий
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+        </div>
+    </div>
+    <script src="/public/js/comments.js" type="text/javascript"></script>
+</div>
