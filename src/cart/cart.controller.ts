@@ -1,19 +1,25 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Param, Render } from '@nestjs/common';
 import { CartService } from './cart.service';
 import { AddToCartDto } from './dto/add-to-cart.dto';
 
 @Controller('cart')
 export class CartController {
-  constructor(private readonly cartService: CartService) {}
+  constructor(private readonly cartService: CartService) { }
 
-  @Post('/add')
-  addToCart(@Body() createCartDto: AddToCartDto) {
-    return this.cartService.addToCart(createCartDto.product, ''); // TODO: userId
+  @Get()
+  @Render('sell-cart/sell-cart.ejs')
+  getCartPage(@Param('userId') userId: string) {
+    return this.cartService.getCartPageData();
+  }
+
+  @Post()
+  addToCart(@Body() addToCartDto: AddToCartDto) {
+    return this.cartService.addToCart(addToCartDto);
   }
 
   @Delete(':id')
   removeFromCart(@Param('id') id: string) {
-    return this.cartService.removeFromCart(id, '');
+    return this.cartService.removeFromCart(id);
   }
 
   @Delete('/all')

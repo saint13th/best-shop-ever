@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { UserService } from 'src/user/user.service';
-import { ProductService } from 'src/product/product.service';
+import { UsersService } from 'src/users/users.service';
+import { ProductsService } from 'src/products/products.service';
 
 @Injectable()
 export class MainService {
-  async getData(userService: UserService, productService: ProductService) {
-    const products = await productService.findAll();
+  async getData(userService: UsersService, productService: ProductsService) {
+    const products = await productService.findAll({});
     
     return { products };
   }

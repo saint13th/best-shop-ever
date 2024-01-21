@@ -1,10 +1,10 @@
-import { Controller, Get, Post, Body, Render } from '@nestjs/common';
-import { UserService } from 'src/user/user.service';
+import { Controller, Get, Render } from '@nestjs/common';
+import { UsersService } from 'src/users/users.service';
 
 @Controller('signin')
 export class SigninController {
   constructor(
-    private readonly userService: UserService,
+    private readonly usersService: UsersService,
   ) { }
 
   @Get()

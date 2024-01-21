@@ -1,14 +1,16 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ProductModule } from './product/product.module';
+import { ProductsModule } from './products/products.module';
 import { ConfigModule } from '@nestjs/config';
 import { SigninModule } from './signin/signin.module';
 import { SignupModule } from './signup/signup.module';
-import { UserModule } from './user/user.module';
+import { UsersModule } from './users/users.module';
 import { MainModule } from './main/main.module';
-import { ProductCommentModule } from './product-comment/product-comment.module';
+import { ProductCommentModule } from './product-comments/product-comments.module';
 import { CartModule } from './cart/cart.module';
 import { AuthModule } from './auth/auth.module';
+import { AdminModule } from './admin/admin.module';
+import { OrdersModule } from './orders/orders.module';
 
 @Module({
   imports: [
@@ -17,14 +19,16 @@ import { AuthModule } from './auth/auth.module';
       isGlobal: true,
     }),
     MongooseModule.forRoot(process.env.DB_URI),
-    ProductModule,
+    ProductsModule,
     SigninModule,
     SignupModule,
-    UserModule,
+    UsersModule,
     MainModule,
     ProductCommentModule,
     CartModule,
     AuthModule,
+    AdminModule,
+    OrdersModule,
   ],
   controllers: [],
   providers: [],

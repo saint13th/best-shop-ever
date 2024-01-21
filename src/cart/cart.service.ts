@@ -1,55 +1,94 @@
-import { Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
 import * as mongoose from 'mongoose';
+import { ObjectId } from 'mongodb';
+import { Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Cart } from './schemas/cart.schema';
-import { Product } from 'src/product/schemas/product.schema';
+import { AddToCartDto } from './dto/add-to-cart.dto';
+import { Product } from 'src/products/schemas/product.schema';
 
 @Injectable()
 export class CartService {
   constructor(
     @InjectModel(Cart.name)
-    private cartModel: mongoose.Model<Cart>
+    private cartModel: mongoose.Model<Cart>,
+    @InjectModel(Product.name)
+    private productModel: mongoose.Model<Product>
   ) { }
 
-  async addToCart(product: Product, userId: string): Promise<Cart> {
+  async getCartPageData(): Promise<{ cart: Cart, itemsCount: number, totalPrice: number }> {
+    const userId = '65aaa68952cc08569f2be370'; // TODO: session userId
+
     if (!userId) {
       throw new UnauthorizedException('Пользователь не авторизован!')
     }
 
-    const resultFind = await this.cartModel.findOne({ userId });
+    const cart = await this.cartModel.findOne({ userId });
+    const itemsCount = cart?.products.length;
+    const totalPrice = cart?.products.reduce((a, b) => a + b.price, 0)
 
-    if (!resultFind) {
-      const resultCreate = await this.cartModel.create({
+    return { cart, itemsCount, totalPrice };
+  }
+
+  async addToCart(addToCartDto: AddToCartDto): Promise<Cart> {
+    const userId = '65aaa68952cc08569f2be370'; // TODO: session userId
+
+    if (!userId) {
+      throw new UnauthorizedException('Пользователь не авторизован!')
+    }
+
+    const foundCart = await this.cartModel.findOne({ userId });
+    const product = await this.productModel.findOne({ _id: addToCartDto.productId });
+
+    if (!product) {
+      throw new NotFoundException('Товар не найден!')
+    }
+
+    if (!foundCart) {
+      const createdCart = await this.cartModel.create({
         userId,
         products: [product],
       });
 
-      return resultCreate;
+      return createdCart;
     } else {
-      resultFind.products.push(product);
+      foundCart.products.push(product);
+      foundCart.save()
 
-      return resultFind;
+      return foundCart;
     }
   }
 
-  async removeFromCart(id: string, userId: string) {
+  async removeFromCart(productId: string) {
+    const userId = '65aaa68952cc08569f2be370'; // TODO: session userId
+    const curProductId = new ObjectId(productId);
+
+    return this.cartModel.findOneAndUpdate(
+      { userId },
+      {
+        $pull: {
+          products: { _id: curProductId }
+        },
+      },
+      { new: true },
+    );
+  }
+
+  async clearCart() {
+    const userId = '65aaa68952cc08569f2be370'; // TODO: session userId
+
     if (!userId) {
       throw new UnauthorizedException('Пользователь не авторизован!')
     }
 
-    const resultFind = await this.cartModel.findOne({ userId });
+    const cart = await this.cartModel.findOne({ userId });
 
-    if (!resultFind) {
+    if (!cart) {
       throw new NotFoundException('Корзина не найдена!')
     } else {
-      // @ts-ignore
-      const result = resultFind.products.filter((product) => product._id !== id)
+      cart.updateOne({ $set: { products: [] } });
+      cart.save();
 
-      return result;
+      return cart;
     }
-  }
-
-  clearCart() {
-    return `This action removes all items in cart`;
   }
 }

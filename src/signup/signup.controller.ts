@@ -1,13 +1,13 @@
 import { Controller, Get, Post, Body, Render } from '@nestjs/common';
 import { SignupService } from './signup.service';
 import { SignupDto } from './dto/signup.dto';
-import { UserService } from "../user/user.service";
+import { UsersService } from "../users/users.service";
 
 @Controller('signup')
 export class SignupController {
   constructor(
       private readonly signupService: SignupService,
-      private readonly userService: UserService,
+      private readonly userService: UsersService,
   ) {}
 
   @Get()
