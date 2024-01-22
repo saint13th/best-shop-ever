@@ -25,6 +25,8 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, swagDocumentConfig);
 
+  fs.writeFileSync("./swagger-spec.json", JSON.stringify(document));
+
   SwaggerModule.setup('api', app, document);
 
   app.useStaticAssets({
