@@ -10,7 +10,7 @@
 
                 if (!dataDeleteId) return;
 
-                const { result, error } = await fetchService.request({ url: `/cart/${dataDeleteId}`, method: 'DELETE' });
+                const { result, error } = await fetchService.request({ url: `/api/v1/cart/${dataDeleteId}`, method: 'DELETE' });
 
                 if (error) {
                     alert(error.message);

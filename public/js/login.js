@@ -10,8 +10,8 @@
             const password = document.querySelector('#password').value;
             const loginError = document.querySelector('#loginError');
             const getUrl = () => {
-                if (formType === 'signin') return '/auth/signIn';
-                if (formType === 'signUp') return `/${formType}`;
+                if (formType === 'signin') return '/api/v1/auth/signIn';
+                if (formType === 'signup') return `/api/v1/auth/signUp`;
             }
             const url = getUrl();
 
