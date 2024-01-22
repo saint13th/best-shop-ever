@@ -12,7 +12,7 @@ export class UsersService {
   constructor(
     @InjectModel(User.name)
     private userModel: mongoose.Model<User>
-  ){}
+  ) { }
 
   async signUp(user: SignupDto): Promise<User> {
     const result = await this.userModel.create({

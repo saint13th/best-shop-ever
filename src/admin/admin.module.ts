@@ -25,6 +25,8 @@ import { UserSchema } from '../users/schemas/user.schema';
     )
   ],
   controllers: [AdminController],
-  providers: [AdminService],
+  providers: [
+    AdminService,
+  ],
 })
 export class AdminModule { }

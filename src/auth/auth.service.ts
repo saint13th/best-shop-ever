@@ -20,13 +20,31 @@ export class AuthService {
 
     // @ts-ignore
     const payload = { sub: user._id, username: user.email };
+    const access_token = await this.jwtService.signAsync(payload);
 
     return {
-      access_token: await this.jwtService.signAsync(payload),
+      access_token
     };
   }
 
   async signUp(signupDto: SignupDto) {
     return await this.userService.signUp(signupDto)
+  }
+
+  async validateUser(email: string, pass: string): Promise<any> {
+    const user = await this.userService.findByEmail(email);
+
+    if (user && user.password === pass) {
+      const { password, ...result } = user;
+
+      return result;
+    }
+    return null;
+  }
+
+  async getProfile(username: string) {
+    const { name, email, image, role } = await this.userService.findByEmail(username);
+
+    return { name, email, image, role }
   }
 }

@@ -1,8 +1,9 @@
-import { Controller, Get, Param, Render } from '@nestjs/common';
+import { Controller, Get, Param, Render, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { MainService } from './main.service';
 import { ProductsService } from '../products/products.service';
 import { CartService } from '../cart/cart.service';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 
 @ApiTags('main (pages)')
@@ -50,18 +51,21 @@ export class MainController {
     return this.mainService.getCartPageData(this.cartService);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('admin')
   @Render('admin/index.ejs')
   getAdminPage() {
     return {};
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('admin/users-create')
   @Render('admin/users/users-create.ejs')
   getAdminUsersCreatePage() {
     return {};
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('admin/products-create')
   @Render('admin/products/products-create.ejs')
   getAdminProductsPage() {

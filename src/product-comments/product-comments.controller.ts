@@ -1,8 +1,9 @@
-import { Controller, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Post, Body, Patch, Param, UseGuards,  Delete } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ProductCommentService } from './product-comments.service';
 import { CreateProductCommentDto } from './dto/create-product-comment.dto';
 import { UpdateProductCommentDto } from './dto/update-product-comment.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiTags('product-comments')
 @Controller('api/v1/product-comments')
@@ -11,6 +12,7 @@ export class ProductCommentController {
     private readonly productCommentService: ProductCommentService,
   ) { }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createProductCommentDto: CreateProductCommentDto) {
     const userName = ''; // TODO: userName

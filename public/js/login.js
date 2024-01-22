@@ -29,7 +29,7 @@
             }
 
             loginError.innerHTML = '';
-            window.location.pathname = '/';
+            // window.location.pathname = '/';
         } catch (error) {
             loginError.innerHTML = error.message;
         }
