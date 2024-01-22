@@ -1,10 +1,12 @@
-import { Controller, Delete, Get, Post, Body, Param, Patch, Query, Render } from '@nestjs/common';
+import { Controller, Delete, Get, Post, Body, Param, Patch, Query } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { AdminService } from './admin.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 
+@ApiTags('admin')
 @Controller('api/v1/admin')
 export class AdminController {
   constructor(private readonly adminService: AdminService) { }

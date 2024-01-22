@@ -16,7 +16,7 @@ export class OrdersService {
     return `This action returns a #${id} order`;
   }
 
-  update(id: number, updateOrderDto: UpdateOrderDto) {
+  update(id: string, updateOrderDto: UpdateOrderDto) {
     return `This action updates a #${id} order`;
   }
 
