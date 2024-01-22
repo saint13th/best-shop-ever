@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import { NestFactory } from '@nestjs/core';
 import { Logger } from '@nestjs/common';
 import { NestFastifyApplication, FastifyAdapter } from '@nestjs/platform-fastify';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { join } from 'path';
 
@@ -16,6 +17,17 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter({ logger: true, https: httpsOptions }),
   );
+  const swagDocumentConfig = new DocumentBuilder()
+    .setTitle('BSE API')
+    .setDescription('BSE API description')
+    .setVersion('1.0')
+    .addTag('bse')
+    .build();
+  const document = SwaggerModule.createDocument(app, swagDocumentConfig);
+
+  fs.writeFileSync("./swagger-spec.json", JSON.stringify(document));
+
+  SwaggerModule.setup('api', app, document);
 
   app.useStaticAssets({
     root: join(__dirname, '..', 'public'),

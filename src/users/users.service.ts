@@ -5,7 +5,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateUserDto } from '../admin/dto/update-user.dto';
 // schemas
 import { User, UserRole } from './schemas/user.schema';
-import { SignupDto } from 'src/signup/dto/signup.dto';
+import { SignupDto } from '../auth/dto/signup.dto';
 
 @Injectable()
 export class UsersService {

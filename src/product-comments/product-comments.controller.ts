@@ -1,21 +1,15 @@
-import { Controller, Get, Post, Body, Render, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { ProductCommentService } from './product-comments.service';
 import { CreateProductCommentDto } from './dto/create-product-comment.dto';
 import { UpdateProductCommentDto } from './dto/update-product-comment.dto';
-import { ProductsService } from 'src/products/products.service';
 
-@Controller('product-comments')
+@ApiTags('product-comments')
+@Controller('api/v1/product-comments')
 export class ProductCommentController {
   constructor(
     private readonly productCommentService: ProductCommentService,
-    private readonly productsService: ProductsService,
   ) { }
-
-  @Get(':productName')
-  @Render('product-comment.ejs')
-  findAllByProduct(@Param('productName') productName: string) {
-    return this.productCommentService.findAllByProduct(productName, this.productsService);
-  }
 
   @Post()
   create(@Body() createProductCommentDto: CreateProductCommentDto) {

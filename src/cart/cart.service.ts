@@ -4,7 +4,7 @@ import { Injectable, UnauthorizedException, NotFoundException } from '@nestjs/co
 import { InjectModel } from '@nestjs/mongoose';
 import { Cart } from './schemas/cart.schema';
 import { AddToCartDto } from './dto/add-to-cart.dto';
-import { Product } from 'src/products/schemas/product.schema';
+import { Product } from '../products/schemas/product.schema';
 
 @Injectable()
 export class CartService {
@@ -15,7 +15,7 @@ export class CartService {
     private productModel: mongoose.Model<Product>
   ) { }
 
-  async getCartPageData(): Promise<{ cart: Cart, itemsCount: number, totalPrice: number }> {
+  async getCart(): Promise<{ cart: Cart }> {
     const userId = '65aaa68952cc08569f2be370'; // TODO: session userId
 
     if (!userId) {
@@ -23,10 +23,8 @@ export class CartService {
     }
 
     const cart = await this.cartModel.findOne({ userId });
-    const itemsCount = cart?.products.length;
-    const totalPrice = cart?.products.reduce((a, b) => a + b.price, 0)
 
-    return { cart, itemsCount, totalPrice };
+    return { cart };
   }
 
   async addToCart(addToCartDto: AddToCartDto): Promise<Cart> {

@@ -41,7 +41,7 @@
             const shortDescription = document.querySelector('#shortDescription').value;
             const createProductSuccess = document.querySelector('#createProductSuccess');
             const specs = getSpecs();
-            const url = '/admin/products';
+            const url = '/api/v1/admin/products';
 
             const { result, error } = await fetchService.request({
                 method: 'POST', url, params: {

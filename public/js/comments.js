@@ -10,7 +10,7 @@
             const commentError = document.querySelector('#commentError');
 
             const response = await fetchService.request({
-                method: 'POST', url: '/product-comments', params: {
+                method: 'POST', url: '/api/v1/product-comments', params: {
                     productName,
                     rating: 5, // TODO: rating
                     commentText: commentsValue,

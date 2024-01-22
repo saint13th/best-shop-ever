@@ -1,27 +1,17 @@
-import { Controller, Delete, Get, Post, Body, Param, Patch, Query, Render } from '@nestjs/common';
+import { Controller, Delete, Get, Post, Body, Param, Patch, Query } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { AdminService } from './admin.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 
-@Controller('admin')
+@ApiTags('admin')
+@Controller('api/v1/admin')
 export class AdminController {
   constructor(private readonly adminService: AdminService) { }
 
-  @Get()
-  @Render('admin/index.ejs')
-  getAdminPage() {
-    return {};
-  }
-
   // users ---------------------------------------------------------
-  @Get('/users/create')
-  @Render('admin/users/users-create.ejs')
-  getUsersCreatePage() {
-    return {};
-  }
-
   @Get('/users')
   findAllUsers(@Query() query) {
     return this.adminService.findAllUsers(query);
@@ -43,12 +33,6 @@ export class AdminController {
   }
 
   // products -------------------------------------------------------
-  @Get('/products/create')
-  @Render('admin/products/products-create.ejs')
-  getProductsPage() {
-    return {};
-  }
-
   @Post('/products')
   createProduct(@Body() createProduct: CreateProductDto) {
     return this.adminService.createProduct(createProduct);

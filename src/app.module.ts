@@ -2,8 +2,6 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ProductsModule } from './products/products.module';
 import { ConfigModule } from '@nestjs/config';
-import { SigninModule } from './signin/signin.module';
-import { SignupModule } from './signup/signup.module';
 import { UsersModule } from './users/users.module';
 import { MainModule } from './main/main.module';
 import { ProductCommentModule } from './product-comments/product-comments.module';
@@ -20,8 +18,6 @@ import { OrdersModule } from './orders/orders.module';
     }),
     MongooseModule.forRoot(process.env.DB_URI),
     ProductsModule,
-    SigninModule,
-    SignupModule,
     UsersModule,
     MainModule,
     ProductCommentModule,
