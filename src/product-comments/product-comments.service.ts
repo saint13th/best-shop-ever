@@ -3,7 +3,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateProductCommentDto } from './dto/create-product-comment.dto';
 import { UpdateProductCommentDto } from './dto/update-product-comment.dto';
-import { ProductsService } from 'src/products/products.service';
+import { ProductsService } from '../products/products.service';
 import { Product } from "../products/schemas/product.schema";
 
 @Injectable()

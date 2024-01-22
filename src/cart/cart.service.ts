@@ -4,7 +4,7 @@ import { Injectable, UnauthorizedException, NotFoundException } from '@nestjs/co
 import { InjectModel } from '@nestjs/mongoose';
 import { Cart } from './schemas/cart.schema';
 import { AddToCartDto } from './dto/add-to-cart.dto';
-import { Product } from 'src/products/schemas/product.schema';
+import { Product } from '../products/schemas/product.schema';
 
 @Injectable()
 export class CartService {

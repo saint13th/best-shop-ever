@@ -1,8 +1,8 @@
 import { Controller, Get, Param, Render } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { MainService } from './main.service';
-import { ProductsService } from 'src/products/products.service';
-import { CartService } from 'src/cart/cart.service';
+import { ProductsService } from '../products/products.service';
+import { CartService } from '../cart/cart.service';
 
 
 @ApiTags('main (pages)')

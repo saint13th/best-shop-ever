@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { MainService } from './main.service';
 import { MainController } from './main.controller';
-import { UsersModule } from 'src/users/users.module';
-import { ProductsModule } from 'src/products/products.module';
-import { CartModule } from 'src/cart/cart.module';
+import { UsersModule } from '../users/users.module';
+import { ProductsModule } from '../products/products.module';
+import { CartModule } from '../cart/cart.module';
 
 @Module({
   imports: [UsersModule, ProductsModule, CartModule],

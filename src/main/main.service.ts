@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
-import { CartService } from 'src/cart/cart.service';
-import { ProductsService } from 'src/products/products.service';
-import { Product } from 'src/products/schemas/product.schema';
+import { CartService } from '../cart/cart.service';
+import { ProductsService } from '../products/products.service';
+import { Product } from '../products/schemas/product.schema';
 
 @Injectable()
 export class MainService {

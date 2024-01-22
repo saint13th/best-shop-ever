@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from 'src/users/schemas/user.schema';
-import { Product } from 'src/products/schemas/product.schema';
+import { User } from '../users/schemas/user.schema';
+import { Product } from '../products/schemas/product.schema';
 import { CreateProductDto } from './dto/create-product.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';

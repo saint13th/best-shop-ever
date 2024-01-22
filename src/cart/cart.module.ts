@@ -3,8 +3,8 @@ import { CartService } from './cart.service';
 import { CartController } from './cart.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CartSchema } from './schemas/cart.schema';
-import { UserSchema } from 'src/users/schemas/user.schema';
-import { ProductSchema } from 'src/products/schemas/product.schema';
+import { UserSchema } from '../users/schemas/user.schema';
+import { ProductSchema } from '../products/schemas/product.schema';
 
 @Module({
   imports: [
