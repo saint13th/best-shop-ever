@@ -5,8 +5,8 @@ import { Product } from '../products/schemas/product.schema';
 
 @Injectable()
 export class MainService {
-  async getMainPageData(productService: ProductsService) {
-    const products = await productService.findAll({});
+  async getMainPageData(productService: ProductsService, query = '') {
+    const products = await productService.findAll(query);
 
     return { products };
   }

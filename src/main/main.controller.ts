@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Render, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Query, Render, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { MainService } from './main.service';
 import { ProductsService } from '../products/products.service';
@@ -20,7 +20,13 @@ export class MainController {
   @Get()
   @Render('index.ejs')
   getMainPage() {
-    return this.mainService.getMainPageData(this.productService);
+    return this.mainService.getMainPageData(this.productService, '');
+  }
+
+  @Get('search')
+  @Render('index.ejs')
+  getSearchPage(@Query() query) {
+    return this.mainService.getMainPageData(this.productService, query);
   }
 
   @Get('signin')
