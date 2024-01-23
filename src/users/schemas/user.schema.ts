@@ -12,7 +12,7 @@ export enum UserRole {
 @Schema()
 export class User {
   @Prop({ required: true })
-  role: UserRole[];
+  roles: UserRole[];
 
   @Prop()
   name: string;

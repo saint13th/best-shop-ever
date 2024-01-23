@@ -43,8 +43,8 @@ export class AuthService {
   }
 
   async getProfile(username: string) {
-    const { name, email, image, role } = await this.userService.findByEmail(username);
+    const { name, email, image, roles } = await this.userService.findByEmail(username);
 
-    return { name, email, image, role }
+    return { name, email, image, roles }
   }
 }

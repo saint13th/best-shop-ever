@@ -17,7 +17,7 @@ export class UsersService {
   async signUp(user: SignupDto): Promise<User> {
     const result = await this.userModel.create({
       ...user,
-      role: [UserRole.USER],
+      roles: [UserRole.USER],
       name: '',
       image: '',
     });
