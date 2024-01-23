@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import { NestFactory } from '@nestjs/core';
+import helmet from '@fastify/helmet';
 import { Logger } from '@nestjs/common';
 import { NestFastifyApplication, FastifyAdapter } from '@nestjs/platform-fastify';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
@@ -43,6 +44,7 @@ async function bootstrap() {
   app.enableCors({
     origin: true,
   });
+  app.register(helmet);
 
   await app.listen(port);
 }
