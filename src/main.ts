@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import { NestFactory } from '@nestjs/core';
 import helmet from '@fastify/helmet';
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFastifyApplication, FastifyAdapter } from '@nestjs/platform-fastify';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
@@ -29,6 +29,8 @@ async function bootstrap() {
   fs.writeFileSync("./swagger-spec.json", JSON.stringify(document));
 
   SwaggerModule.setup('api', app, document);
+
+  app.useGlobalPipes(new ValidationPipe());
 
   app.useStaticAssets({
     root: join(__dirname, '..', 'public'),
