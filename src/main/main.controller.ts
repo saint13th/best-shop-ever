@@ -4,6 +4,8 @@ import { MainService } from './main.service';
 import { ProductsService } from '../products/products.service';
 import { CartService } from '../cart/cart.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { Roles } from '../users/decorators/roles.decorator';
+import { UserRole } from '../users/schemas/user.schema';
 
 
 @ApiTags('main (pages)')
@@ -51,6 +53,7 @@ export class MainController {
     return this.mainService.getCartPageData(this.cartService);
   }
 
+  @Roles(UserRole.ADMIN, UserRole.MANAGER)
   @UseGuards(JwtAuthGuard)
   @Get('admin')
   @Render('admin/index.ejs')
@@ -58,6 +61,7 @@ export class MainController {
     return {};
   }
 
+  @Roles(UserRole.ADMIN, UserRole.MANAGER)
   @UseGuards(JwtAuthGuard)
   @Get('admin/users-create')
   @Render('admin/users/users-create.ejs')
@@ -65,6 +69,7 @@ export class MainController {
     return {};
   }
 
+  @Roles(UserRole.ADMIN, UserRole.MANAGER)
   @UseGuards(JwtAuthGuard)
   @Get('admin/products-create')
   @Render('admin/products/products-create.ejs')
