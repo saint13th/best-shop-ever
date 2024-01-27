@@ -7,10 +7,10 @@
 
             const commentsValue = document.querySelector('#comment').value;
             const productName = commentsForm.dataset.product;
-            const commentError = document.querySelector('#commentError');
 
-            const response = await fetchService.request({
-                method: 'POST', url: '/api/v1/product-comments', params: {
+            const response = await fetchService.post({
+                url: '/product-comments',
+                params: {
                     productName,
                     rating: 5, // TODO: rating
                     commentText: commentsValue,
@@ -18,15 +18,14 @@
             })
 
             if (response.error) {
-                commentError.innerHTML = error;
+                alert(response.error);
 
                 return;
             }
 
-            commentError.innerHTML = '';
             window.location.reload();
         } catch (error) {
-            commentError.innerHTML = error.message;
+            alert(error.message);
         }
     });
 }(fetchService))

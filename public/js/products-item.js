@@ -7,8 +7,9 @@
             e.preventDefault();
 
             const productId = addToCartButton.getAttribute('data-productId');
-            const response = await fetchService.request({
-                method: 'POST', url: '/api/v1/cart', params: {
+            const response = await fetchService.post({
+                url: '/cart',
+                params: {
                     productId
                 }
             });

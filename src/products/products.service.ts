@@ -18,6 +18,8 @@ export class ProductsService {
     const price = query?.price || null;
     const rating = query?.rating || null;
     const image = query?.image || null;
+    // TODO page, limit
+
     const queries = {
         ...(id ? { id } : {}),
         ...(title ? { title } : {}),

@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import * as bcrypt from 'bcrypt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Injectable, NotFoundException } from '@nestjs/common';
 // dto
@@ -12,12 +13,16 @@ export class UsersService {
   constructor(
     @InjectModel(User.name)
     private userModel: mongoose.Model<User>
-  ){}
+  ) { }
 
   async signUp(user: SignupDto): Promise<User> {
+    const saltOrRounds = 10;
+    const hash = await bcrypt.hash(user.password, saltOrRounds);
+
     const result = await this.userModel.create({
       ...user,
-      role: [UserRole.USER],
+      password: hash,
+      roles: [UserRole.USER],
       name: '',
       image: '',
     });

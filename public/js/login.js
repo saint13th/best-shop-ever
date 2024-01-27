@@ -10,13 +10,14 @@
             const password = document.querySelector('#password').value;
             const loginError = document.querySelector('#loginError');
             const getUrl = () => {
-                if (formType === 'signin') return '/api/v1/auth/signIn';
-                if (formType === 'signup') return `/api/v1/auth/signUp`;
+                if (formType === 'signin') return '/auth/signIn';
+                if (formType === 'signup') return `/auth/signUp`;
             }
             const url = getUrl();
 
-            const { result, error } = await fetchService.request({
-                method: 'POST', url, params: {
+            const { result, error } = await fetchService.post({
+                url,
+                params: {
                     email,
                     password,
                 }

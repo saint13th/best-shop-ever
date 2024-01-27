@@ -1,9 +1,11 @@
-import { Controller, Post, Body, HttpCode, HttpStatus, Get, UseGuards, Request } from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards, Req, Res } from '@nestjs/common';
+import { FastifyReply } from 'fastify';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { SignInDto } from './dto/signIn.dto';
-import { AuthGuard } from "./guards/auth.guard";
 import { SignupDto } from './dto/signup.dto';
+import { LocalAuthGuard } from './guards/local-auth.guard';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @ApiTags('auth')
 @Controller('api/v1/auth')
@@ -11,10 +13,24 @@ export class AuthController {
     constructor(private readonly authService: AuthService) {
     }
 
-    @HttpCode(HttpStatus.OK)
+    @UseGuards(LocalAuthGuard)
     @Post('signIn')
-    signIn(@Body() signInDto: SignInDto) {
-        return this.authService.signIn(signInDto);
+    async signIn(@Body() signInDto: SignInDto, @Req() req: Request, @Res({ passthrough: true }) res: FastifyReply) {
+        const result = await this.authService.signIn(signInDto);
+
+        res.setCookie('access_token', result.access_token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'lax',
+            expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
+            path: '/'
+        }).send({ status: 'ok' });
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Post('signOut')
+    async signOut(@Res({ passthrough: true }) res: FastifyReply) {
+        res.clearCookie('access_token').send({ status: 'ok' });
     }
 
     @Post('signUp')
@@ -22,9 +38,9 @@ export class AuthController {
         return this.authService.signUp(SignupDto);
     }
 
-    @UseGuards(AuthGuard)
+    @UseGuards(JwtAuthGuard)
     @Get('profile')
-    getProfile(@Request() req) {
-        return req.user;
+    getProfile(@Req() req) {
+        return this.authService.getProfile(req.user.username);
     }
 }

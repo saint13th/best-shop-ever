@@ -1,43 +1,90 @@
-import { Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CartService } from '../cart/cart.service';
 import { ProductsService } from '../products/products.service';
-import { Product } from '../products/schemas/product.schema';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class MainService {
-  async getMainPageData(productService: ProductsService) {
-    const products = await productService.findAll({});
 
-    return { products };
+  getUser = async (username, usersService: UsersService,) => {
+    let user = null;
+
+    if (username) {
+      const { name, email, image, roles } = await usersService.findByEmail(username);
+      
+      user = { name, email, image, roles }
+    }
+
+    return user;
   }
 
-  async getCartPageData(cartService: CartService) {
-    const userId = '65aaa68952cc08569f2be370'; // TODO: session userId
+  async getMainPageData(
+    usersService: UsersService,
+    productService: ProductsService,
+    query = '',
+    currentUser = null
+  ) {
+    const user = await this.getUser(currentUser?.username, usersService);
+    const products = await productService.findAll(query);
 
-    if (!userId) {
+    return { products, user };
+  }
+
+  getSignInPageData = async (usersService: UsersService, currentUser = null) => {
+    const user = await this.getUser(currentUser?.username, usersService);
+
+    return { isSignIn: true, isSignUp: false, type: 'signin', user };
+  }
+
+  getSignUpPageData = async (usersService: UsersService, currentUser = null) => {
+    const user = await this.getUser(currentUser?.username, usersService);
+
+    return { isSignIn: false, isSignUp: true, type: 'signup', user };
+  }
+
+  async getCartPageData(
+    currentUser = null,
+    cartService: CartService,
+    usersService: UsersService,
+  ) {
+    if (!currentUser?.userId) {
       throw new UnauthorizedException('Пользователь не авторизован!')
     }
 
-    const { cart } = await cartService.getCart();
+    const user = await this.getUser(currentUser?.username, usersService);
+    const { cart } = await cartService.getCart(currentUser?.userId);
     const itemsCount = cart?.products.length;
     const totalPrice = cart?.products.reduce((a, b) => a + b.price, 0)
 
-    return { cart, itemsCount, totalPrice };
+    return { cart, itemsCount, totalPrice, user };
   }
 
-  async getProductCommentsPageData(productName: string, productService: ProductsService) {
+  async getProductCommentsPageData(
+    productName: string,
+    currentUser = null,
+    productService: ProductsService,
+    usersService: UsersService,
+  ) {
+    const user = await this.getUser(currentUser?.username, usersService);
     const result = await productService.findAll({ name: productName });
 
     return {
       productName,
       productTitle: result.at(0).title,
-      comments: result.at(0).comments
+      comments: result.at(0).comments,
+      user
     }
   }
 
-  async getProductsPageData(name: string, productService: ProductsService): Promise<{ product: Product }> {
+  async getProductsPageData(
+    name: string,
+    currentUser = null,
+    productService: ProductsService,
+    usersService: UsersService,
+  ) {
+    const user = await this.getUser(currentUser?.username, usersService);
     const result = await productService.findOneByName(name);
-    
-    return result;
+
+    return { ...result, user };
   }
 }

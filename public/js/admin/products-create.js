@@ -41,10 +41,11 @@
             const shortDescription = document.querySelector('#shortDescription').value;
             const createProductSuccess = document.querySelector('#createProductSuccess');
             const specs = getSpecs();
-            const url = '/api/v1/admin/products';
+            const url = '/admin/products';
 
-            const { result, error } = await fetchService.request({
-                method: 'POST', url, params: {
+            const { result, error } = await fetchService.post({
+                url,
+                params: {
                     title,
                     name,
                     price,
