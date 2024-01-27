@@ -6,7 +6,7 @@ import { ProductsModule } from '../products/products.module';
 import { CartModule } from '../cart/cart.module';
 
 @Module({
-  imports: [UsersModule, ProductsModule, CartModule],
+  imports: [UsersModule, ProductsModule, CartModule, UsersModule],
   controllers: [MainController],
   providers: [MainService],
 })

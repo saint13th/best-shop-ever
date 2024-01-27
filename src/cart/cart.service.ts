@@ -15,9 +15,7 @@ export class CartService {
     private productModel: mongoose.Model<Product>
   ) { }
 
-  async getCart(): Promise<{ cart: Cart }> {
-    const userId = '65aaa68952cc08569f2be370'; // TODO: session userId
-
+  async getCart(userId: string): Promise<{ cart: Cart }> {
     if (!userId) {
       throw new UnauthorizedException('Пользователь не авторизован!')
     }
@@ -27,9 +25,7 @@ export class CartService {
     return { cart };
   }
 
-  async addToCart(addToCartDto: AddToCartDto): Promise<Cart> {
-    const userId = '65aaa68952cc08569f2be370'; // TODO: session userId
-
+  async addToCart(addToCartDto: AddToCartDto, userId: string): Promise<Cart> {
     if (!userId) {
       throw new UnauthorizedException('Пользователь не авторизован!')
     }
@@ -56,8 +52,11 @@ export class CartService {
     }
   }
 
-  async removeFromCart(productId: string) {
-    const userId = '65aaa68952cc08569f2be370'; // TODO: session userId
+  async removeFromCart(productId: string, userId: string) {
+    if (!userId) {
+      throw new UnauthorizedException('Пользователь не авторизован!')
+    }
+
     const curProductId = new ObjectId(productId);
 
     return this.cartModel.findOneAndUpdate(
@@ -71,9 +70,7 @@ export class CartService {
     );
   }
 
-  async clearCart() {
-    const userId = '65aaa68952cc08569f2be370'; // TODO: session userId
-
+  async clearCart(userId: string) {
     if (!userId) {
       throw new UnauthorizedException('Пользователь не авторизован!')
     }

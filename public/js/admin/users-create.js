@@ -11,14 +11,15 @@
             const image = document.querySelector('#image').value;
             const createUserError = document.querySelector('#createUserError');
             const createUserSuccess = document.querySelector('#createUserSuccess');
-            const url = '/api/v1/admin/users';
+            const url = '/admin/users';
 
             const role = Array.prototype.slice.call(document.querySelectorAll('#role option:checked'), 0).map((v) => {
                 return v.value;
             });
 
-            const { result, error } = await fetchService.request({
-                method: 'POST', url, params: {
+            const { result, error } = await fetchService.post({
+                url,
+                params: {
                     name,
                     role,
                     email,

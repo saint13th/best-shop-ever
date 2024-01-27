@@ -8,8 +8,9 @@
             const commentsValue = document.querySelector('#comment').value;
             const productName = commentsForm.dataset.product;
 
-            const response = await fetchService.request({
-                method: 'POST', url: '/api/v1/product-comments', params: {
+            const response = await fetchService.post({
+                url: '/product-comments',
+                params: {
                     productName,
                     rating: 5, // TODO: rating
                     commentText: commentsValue,
