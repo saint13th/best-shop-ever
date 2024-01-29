@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
+import * as bcrypt from 'bcrypt';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from '../users/schemas/user.schema';
+import { User, UserRole } from '../users/schemas/user.schema';
 import { Product } from '../products/schemas/product.schema';
 import { CreateProductDto } from './dto/create-product.dto';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -19,7 +20,13 @@ export class AdminService {
     ) { }
 
     async createUser(createUserDto: CreateUserDto) {
-        const result = await this.userModel.create(createUserDto);
+        const saltOrRounds = 10;
+        const hash = await bcrypt.hash(createUserDto.password, saltOrRounds);
+
+        const result = await this.userModel.create({
+            ...createUserDto,
+            password: hash
+        });
 
         return result
     }

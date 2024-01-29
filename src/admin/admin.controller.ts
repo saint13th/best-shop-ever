@@ -6,8 +6,8 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { Roles } from '../users/decorators/roles.decorator';
-import { UserRole } from 'src/users/schemas/user.schema';
+import { UserRole } from '../users/schemas/user.schema';
+import { Roles } from '../auth/decorators/roles.decorator';
 
 @ApiTags('admin')
 @Controller('api/v1/admin')
@@ -15,51 +15,51 @@ export class AdminController {
   constructor(private readonly adminService: AdminService) { }
 
   // users ---------------------------------------------------------
-  @Roles(UserRole.ADMIN, UserRole.MANAGER)
   @UseGuards(JwtAuthGuard)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER)
   @Get('/users')
   findAllUsers(@Query() query) {
     return this.adminService.findAllUsers(query);
   }
 
-  @Roles(UserRole.ADMIN, UserRole.MANAGER)
   @UseGuards(JwtAuthGuard)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER)
   @Post('/users')
   createUser(@Body() createUserDto: CreateUserDto) {
     return this.adminService.createUser(createUserDto);
   }
 
-  @Roles(UserRole.ADMIN, UserRole.MANAGER)
   @UseGuards(JwtAuthGuard)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER)
   @Patch('/users/:id')
   updateUser(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.adminService.updateUser(id, updateUserDto);
   }
 
-  @Roles(UserRole.ADMIN, UserRole.MANAGER)
   @UseGuards(JwtAuthGuard)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER)
   @Delete('/users/:id')
   removeUser(@Param('id') id: string) {
     return this.adminService.removeUser(id);
   }
 
   // products -------------------------------------------------------
-  @Roles(UserRole.ADMIN, UserRole.MANAGER)
   @UseGuards(JwtAuthGuard)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER)
   @Post('/products')
   createProduct(@Body() createProduct: CreateProductDto) {
     return this.adminService.createProduct(createProduct);
   }
 
-  @Roles(UserRole.ADMIN, UserRole.MANAGER)
   @UseGuards(JwtAuthGuard)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER)
   @Patch('/products/:id')
   update(@Param('id') id: string, @Body() product: UpdateProductDto) {
     return this.adminService.updateProduct(id, product);
   }
 
-  @Roles(UserRole.ADMIN, UserRole.MANAGER)
   @UseGuards(JwtAuthGuard)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER)
   @Delete('/products/:id')
   remove(@Param('id') id: string) {
     return this.adminService.removeProduct(id);

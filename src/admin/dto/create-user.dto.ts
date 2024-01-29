@@ -11,7 +11,7 @@ import { UserRole } from '../../users/schemas/user.schema';
 
 export class CreateUserDto {
     @IsNotEmpty()
-    role: UserRole[];
+    roles: UserRole[];
 
     @IsNotEmpty()
     name: string;

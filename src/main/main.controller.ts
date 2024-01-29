@@ -5,9 +5,10 @@ import { ProductsService } from '../products/products.service';
 import { CartService } from '../cart/cart.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { JwtAuthWithoutExceptionsGuard } from '../auth/guards/jwt-auth-without-exceptions.guard';
-import { Roles } from '../users/decorators/roles.decorator';
 import { UserRole } from '../users/schemas/user.schema';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { RolesGuard } from '../auth/guards/roles.guard';
 
 
 @ApiTags('main (pages)')
@@ -107,27 +108,36 @@ export class MainController {
     );
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.MANAGER)
-  @UseGuards(JwtAuthGuard)
   @Get('admin')
   @Render('admin/index.ejs')
-  getAdminPage(@Req() request) {
-    return {};
+  async getAdminPage(@Req() request) {
+    const currentUser = { ...request.user };
+    const user = await this.mainService.getUser(currentUser?.username, this.usersService);
+
+    return { user };
   }
 
-  @Roles(UserRole.ADMIN, UserRole.MANAGER)
-  @UseGuards(JwtAuthGuard)
   @Get('admin/users-create')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER)
   @Render('admin/users/users-create.ejs')
-  getAdminUsersCreatePage(@Req() request) {
-    return {};
+  async getAdminUsersCreatePage(@Req() request) {
+    const currentUser = { ...request.user };
+    const user = await this.mainService.getUser(currentUser?.username, this.usersService);
+
+    return { user };
   }
 
-  @Roles(UserRole.ADMIN, UserRole.MANAGER)
-  @UseGuards(JwtAuthGuard)
   @Get('admin/products-create')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER)
   @Render('admin/products/products-create.ejs')
-  getAdminProductsPage(@Req() request) {
-    return {};
+  async getAdminProductsPage(@Req() request) {
+    const currentUser = { ...request.user };
+    const user = await this.mainService.getUser(currentUser?.username, this.usersService);
+
+    return { user };
   }
 }
