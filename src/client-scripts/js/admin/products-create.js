@@ -1,3 +1,5 @@
+import { fetchService } from '../../services/fetchService/fetchService'
+
 (function () {
     const createProductForm = document.querySelector('#createProductForm');
     const specs = document.querySelector('#specs');
@@ -26,7 +28,7 @@
     }
 
 
-    createProductForm.addEventListener("submit", async (e) => {
+    createProductForm && createProductForm.addEventListener("submit", async (e) => {
         const createProductError = document.querySelector('#createProductError');
 
         try {
@@ -70,7 +72,7 @@
         }
     });
 
-    addSpecButton.addEventListener("click", (e) => {
+    addSpecButton && addSpecButton.addEventListener("click", (e) => {
         try {
             const emptydiv = document.createElement('div');
 
@@ -82,7 +84,7 @@
 
     });
 
-    specs.addEventListener("click", (e) => {
+    specs && specs.addEventListener("click", (e) => {
         try {
             const dataDeleteSpec = e.target.getAttribute('data-delete-spec');
 

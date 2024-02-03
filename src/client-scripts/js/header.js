@@ -1,7 +1,9 @@
+import { fetchService } from '../services/fetchService/fetchService';
+
 (function () {
     const logoutButton = document.querySelector('#logoutButton');
 
-    logoutButton.addEventListener('click', async (event) => {
+    logoutButton && logoutButton.addEventListener('click', async (event) => {
         const { result, error } = await fetchService.post({
             url: '/auth/signOut',
             params: {}

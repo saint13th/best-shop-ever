@@ -1,3 +1,5 @@
+import { fetchService } from '../../services/fetchService/fetchService';
+
 (function () {
     const deleteButtons = document.querySelectorAll('.deleteItem');
 

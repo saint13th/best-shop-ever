@@ -140,4 +140,14 @@ export class MainController {
 
     return { user };
   }
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Get('messenger')
+  @Render('messenger/messenger.ejs')
+  async getMessengerPage(@Req() request) {
+    const currentUser = { ...request.user };
+    const user = await this.mainService.getUser(currentUser?.username, this.usersService);
+
+    return { user };
+  }
 }

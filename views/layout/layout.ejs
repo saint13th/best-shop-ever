@@ -5,17 +5,16 @@
     <meta charset="utf-8" />
     <link href="/public/styles/style.css" rel="stylesheet">
     <title>Best Shop ever</title>
-    <script src="/public/libs/axios/axios.min.js"></script>
-    <script src="/public/services/fetchService/fetchService.js"></script>
+    <script type="module" src="/public/build/bundle.esm.js"></script>
+    <script nomodule src="/public/build/bundle.umd.js"></script>
 </head>
 
 <body>
     <%- include('header.ejs', { cartItemsCount: 5 }) %>
-    <div class="bg-white min-h-[calc(100vh-241px)] overflow-auto lg:rounded-tl-3xl">
-        <%-body%>
-    </div>
-    <%- include('footer.ejs') %>
-
+        <div class="bg-white min-h-[calc(100vh-241px)] overflow-auto lg:rounded-tl-3xl">
+            <%-body%>
+        </div>
+        <%- include('footer.ejs') %>
 </body>
 
 </html>

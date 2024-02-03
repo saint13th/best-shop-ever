@@ -1,7 +1,9 @@
+import { fetchService } from '../../services/fetchService/fetchService';
+
 (function () {
     const createUserForm = document.querySelector('#createUserForm');
 
-    createUserForm.addEventListener("submit", async (e) => {
+    createUserForm && createUserForm.addEventListener("submit", async (e) => {
         try {
             e.preventDefault();
 
