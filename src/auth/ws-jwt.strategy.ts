@@ -11,7 +11,7 @@ export class WsJwtStrategy extends PassportStrategy(Strategy, 'wsjwt') {
                 WsJwtStrategy.extractJWT,
                 ExtractJwt.fromAuthHeaderAsBearerToken(),
             ]),
-            secretOrKey: 'test-bse',
+            secretOrKey: process.env.JWT_SECRET,
         });
     }
 
