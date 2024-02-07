@@ -9,8 +9,8 @@ import { CartModule } from './cart/cart.module';
 import { AuthModule } from './auth/auth.module';
 import { AdminModule } from './admin/admin.module';
 import { OrdersModule } from './orders/orders.module';
-import { WebsocketGateway } from './websocket/websocket.gateway';
 import { WebsocketModule } from './websocket/websocket.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -28,8 +28,9 @@ import { WebsocketModule } from './websocket/websocket.module';
     AdminModule,
     OrdersModule,
     WebsocketModule,
+    ChatModule,
   ],
   controllers: [],
-  providers: [WebsocketGateway],
+  providers: [],
 })
 export class AppModule { }

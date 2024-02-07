@@ -50,5 +50,15 @@ export default [
             { file: pkg.mainScript, format: 'cjs', sourcemap: 'inline', },
             { file: pkg.moduleScript, format: 'es', sourcemap: 'inline' }
         ],
+    },
+    {
+        input: 'src/client-scripts/logic/messenger/worker.js',
+        output: {
+            name: 'worker',
+            file: 'public/build/worker.js',
+            format: 'umd',
+            sourcemap: 'inline',
+        },
+        plugins,
     }
 ];

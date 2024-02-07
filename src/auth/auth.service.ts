@@ -52,8 +52,9 @@ export class AuthService {
   }
 
   async getProfile(username: string) {
-    const { name, email, image, roles } = await this.userService.findByEmail(username);
+    // @ts-ignore
+    const { _id, name, email, image, roles } = await this.userService.findByEmail(username);
 
-    return { name, email, image, roles }
+    return { name, email, image, roles, id: _id }
   }
 }

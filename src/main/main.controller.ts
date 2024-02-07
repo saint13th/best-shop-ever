@@ -9,6 +9,7 @@ import { UserRole } from '../users/schemas/user.schema';
 import { UsersService } from '../users/users.service';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { RolesGuard } from '../auth/guards/roles.guard';
+import { ChatService } from 'src/chat/chat.service';
 
 
 @ApiTags('main (pages)')
@@ -19,6 +20,7 @@ export class MainController {
     private readonly productService: ProductsService,
     private readonly cartService: CartService,
     private readonly usersService: UsersService,
+    private readonly chatService: ChatService,
   ) { }
 
   @UseGuards(JwtAuthWithoutExceptionsGuard)
@@ -141,13 +143,27 @@ export class MainController {
     return { user };
   }
 
+  @Get('admin/chats')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER)
+  @Render('admin/chats/chats.ejs')
+  async getAdminChatsPage(@Req() request, @Query() query) {
+    const currentUser = { ...request.user };
+    const user = await this.mainService.getUser(currentUser?.username, this.usersService);
+    const chat = await this.chatService.findChatMessages(query.room);
+    const chats = await this.chatService.findAllChats();
+
+    return { user, messages: chat?.messages, chats };
+  }
+
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Get('messenger')
   @Render('messenger/messenger.ejs')
   async getMessengerPage(@Req() request) {
     const currentUser = { ...request.user };
     const user = await this.mainService.getUser(currentUser?.username, this.usersService);
+    const chat = await this.chatService.findChatMessages(currentUser.username);
 
-    return { user };
+    return { user, messages: chat?.messages };
   }
 }

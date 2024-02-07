@@ -1,43 +1,79 @@
 import {
-  MessageBody,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
-  WsResponse,
+  OnGatewayConnection,
 } from '@nestjs/websockets';
-import { from, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Server } from 'socket.io';
-import { Socket } from 'socket.io-client';
+import { Server, Socket } from 'socket.io';
+import { WebsocketService } from './websocket.service';
+import { Logger, Req, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { ChatService } from '../chat/chat.service';
+import { WsAuthGuard } from 'src/auth/guards/ws-auth.guard';
 
 @WebSocketGateway({
   cors: {
     origin: '*',
   },
+  transports: ['websocket', 'polling'],
 })
-export class WebsocketGateway {
+export class WebsocketGateway implements OnGatewayConnection {
   @WebSocketServer()
   server: Server;
 
-  @SubscribeMessage('events')
-  findAll(@MessageBody() data: any): Observable<WsResponse<number>> {
-    return from([1, 2, 3]).pipe(map(item => ({ event: 'events', data: item })));
-  }
+  private logger: Logger = new Logger('ChatGateway');
 
-  @SubscribeMessage('identity')
-  async identity(@MessageBody() data: number): Promise<number> {
-    return data;
-  }
+  constructor(
+    private readonly websocketService: WebsocketService,
+    private readonly chatService: ChatService,
+  ) { }
+
 
   afterInit(server: Server) {
-    console.log('websockets inited');
+    this.logger.log('Initialized!');
   }
-  
+
   handleDisconnect(client: Socket) {
     console.log(`websockets disconnected: ${client.id}`);
   }
-  
-  handleConnection(client: Socket, ...args: any[]) {
-    console.log(`websockets connected ${client.id}`);
+
+  @UseGuards(JwtAuthGuard)
+  handleConnection(socket: Socket, @Req() request) {
+    this.websocketService.handleConnection(socket);
+  }
+
+  @UseGuards(WsAuthGuard)
+  @SubscribeMessage('chatToServer')
+  async handleMessage(client: Socket, data: { message: string, room?: string }) {
+    // @ts-ignore
+    const currentUser = { ...client.handshake.user };
+    let adminRoom = '';
+
+    if (currentUser.roles.includes('manager') || currentUser.roles.includes('admin')) {
+      adminRoom = data?.room;
+    }
+    const result = await this.chatService.setMessage({ message: data.message }, currentUser, adminRoom)
+
+    if (result) {
+      const room = adminRoom ? adminRoom : currentUser.username;
+
+      this.server.to(room).emit('chatToClient', result.message);
+    }
+  }
+
+  @UseGuards(WsAuthGuard)
+  @SubscribeMessage('joinRoom')
+  handleRoomJoin(client: Socket, room: string) {
+    // @ts-ignore
+    const currentUser = { ...client.handshake.user };
+    
+    client.join(room);
+    client.emit('joinedRoom', room);
+  }
+
+  @SubscribeMessage('leaveRoom')
+  handleRoomLeave(client: Socket, room: string) {
+    client.leave(room);
+    client.emit('leftRoom', room);
   }
 }

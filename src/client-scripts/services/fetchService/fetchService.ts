@@ -9,7 +9,7 @@ const fetchServiceClass = () => {
         }
     });
 
-    const handleRequest = (method, url, params = {}) => {
+    const handleRequest = async (method, url, params = {}) => {
         return axiosInstance[method](url, params)
             .then((response) => ({ result: response.data }))
             .catch((error) => ({ error: error.message }))
@@ -23,7 +23,7 @@ const fetchServiceClass = () => {
 
     const patch = ({ url, params }) => handleRequest('patch', url, params);
 
-    const deleteRequest = ({ url }) => handleRequest('delete', url, params = null)
+    const deleteRequest = ({ url, params }) => handleRequest('delete', url, params = null)
 
     return {
         get,
