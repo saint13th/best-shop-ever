@@ -16,7 +16,6 @@ export class WsJwtStrategy extends PassportStrategy(Strategy, 'wsjwt') {
     }
 
     private static extractJWT(request): string {
-        console.log({ request });
 
         if (
             request.headers &&

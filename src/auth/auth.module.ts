@@ -19,7 +19,7 @@ import { WsJwtStrategy } from './ws-jwt.strategy';
         JwtModule.register({
             global: true,
             secret: process.env.JWT_SECRET,
-            signOptions: { expiresIn: '1d' },
+            signOptions: { expiresIn: '1 day' },
         }),
     ],
     controllers: [AuthController],

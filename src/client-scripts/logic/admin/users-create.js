@@ -15,7 +15,7 @@ import { fetchService } from '../../services/fetchService/fetchService';
             const createUserSuccess = document.querySelector('#createUserSuccess');
             const url = '/admin/users';
 
-            const role = Array.prototype.slice.call(document.querySelectorAll('#role option:checked'), 0).map((v) => {
+            const roles = Array.prototype.slice.call(document.querySelectorAll('#role option:checked'), 0).map((v) => {
                 return v.value;
             });
 
@@ -23,7 +23,7 @@ import { fetchService } from '../../services/fetchService/fetchService';
                 url,
                 params: {
                     name,
-                    role,
+                    roles,
                     email,
                     password,
                     image
