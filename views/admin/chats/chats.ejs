@@ -1,0 +1,17 @@
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-2 xl:gap-x-8">
+        <div class="flex-col">
+            <p class="text">Выберите комнату:</p>
+            <% for(var i=0; i<chats.length; i++) { %>
+                <a href="/admin/chats?room=<%= chats[i].room %>">
+                    <button id="roomItem" data-room="<%= chats[i].room %>">
+                        <%= chats[i].room %>
+                    </button>
+                </a>
+                <% } %>
+        </div>
+        <div class="flex-col">
+            <%- include('../../messenger/messenger.ejs', { messsages: [] }) %>
+        </div>
+    </div>
+</div>

@@ -1,3 +1,5 @@
+import { fetchService } from '../../services/fetchService/fetchService';
+
 (function () {
     const deleteButtons = document.querySelectorAll('.deleteItem');
 
@@ -10,7 +12,7 @@
 
                 if (!dataDeleteId) return;
 
-                const { result, error } = await fetchService.deleteRequest({ url: `/cart/${dataDeleteId}` });
+                const { result, error } = await fetchService.deleteRequest({ url: `/cart/${dataDeleteId}`, params: null });
 
                 if (error) {
                     alert(error.message);

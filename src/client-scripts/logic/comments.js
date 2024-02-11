@@ -1,7 +1,9 @@
+import { fetchService } from '../services/fetchService/fetchService';
+
 (function () {
     const commentsForm = document.querySelector('#commentsForm');
 
-    commentsForm.addEventListener("submit", async (e) => {
+    commentsForm && commentsForm.addEventListener("submit", async (e) => {
         try {
             e.preventDefault();
 

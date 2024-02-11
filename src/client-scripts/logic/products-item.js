@@ -1,8 +1,10 @@
+import { fetchService } from '../services/fetchService/fetchService';
+
 (function () {
     const addToCartButton = document.querySelector('#addToCartButton');
     const addToCartError = document.querySelector('#addToCartError');
 
-    addToCartButton.addEventListener('click', async (e) => {
+    addToCartButton && addToCartButton.addEventListener('click', async (e) => {
         try {
             e.preventDefault();
 

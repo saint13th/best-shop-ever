@@ -1,7 +1,9 @@
+import { fetchService } from '../../services/fetchService/fetchService';
+
 (function () {
     const createUserForm = document.querySelector('#createUserForm');
 
-    createUserForm.addEventListener("submit", async (e) => {
+    createUserForm && createUserForm.addEventListener("submit", async (e) => {
         try {
             e.preventDefault();
 
@@ -13,7 +15,7 @@
             const createUserSuccess = document.querySelector('#createUserSuccess');
             const url = '/admin/users';
 
-            const role = Array.prototype.slice.call(document.querySelectorAll('#role option:checked'), 0).map((v) => {
+            const roles = Array.prototype.slice.call(document.querySelectorAll('#role option:checked'), 0).map((v) => {
                 return v.value;
             });
 
@@ -21,7 +23,7 @@
                 url,
                 params: {
                     name,
-                    role,
+                    roles,
                     email,
                     password,
                     image
