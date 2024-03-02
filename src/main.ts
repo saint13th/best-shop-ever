@@ -54,7 +54,7 @@ async function bootstrap() {
   // @ts-ignore
   await app.register(fastifyCookie);
 
-  await app.listen(port);
+  await app.listen(port, "0.0.0.0");
 }
 
 bootstrap().catch((error) => {
