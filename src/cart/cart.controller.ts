@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Post, Param, Req, UseGuards } from '@nestjs/c
 import { ApiTags } from '@nestjs/swagger';
 import { CartService } from './cart.service';
 import { AddToCartDto } from './dto/add-to-cart.dto';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiTags('cart')
 @Controller('api/v1/cart')

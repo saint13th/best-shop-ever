@@ -9,7 +9,7 @@ import { WebsocketService } from './websocket.service';
 import { Logger, Req, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ChatService } from '../chat/chat.service';
-import { WsAuthGuard } from 'src/auth/guards/ws-auth.guard';
+import { WsAuthGuard } from '../auth/guards/ws-auth.guard';
 
 @WebSocketGateway({
   cors: {

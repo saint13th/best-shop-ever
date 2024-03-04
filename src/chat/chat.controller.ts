@@ -3,12 +3,14 @@ import { ApiTags } from '@nestjs/swagger';
 import { ChatService } from './chat.service';
 import { SetMessageDto } from './dto/set-message.dto';
 import { UpdateChatDto } from './dto/update-chat.dto';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiTags('chats')
 @Controller('api/v1/chats')
 export class ChatController {
-  constructor(private readonly chatService: ChatService) { }
+  constructor(
+    private readonly chatService: ChatService,
+  ) { }
 
   @UseGuards(JwtAuthGuard)
   @Post()
