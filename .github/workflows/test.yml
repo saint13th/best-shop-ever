@@ -6,10 +6,6 @@ on:
   pull_request:
     branches: [main]
 
-defaults:
-  run:
-    working-directory: '/'
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,6 +17,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+        with:
+          path: main
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
@@ -31,7 +29,7 @@ jobs:
         run: npm ci
 
       - name: Run Tests
-        run: npm run test
+        run: npm test
         working-directory: src/book
 
       - name: Build the Docker image
