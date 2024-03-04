@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
@@ -28,7 +28,7 @@ jobs:
 
       - name: Run Tests
         run: npm test
-        working-directory: src/book
+        # working-directory: src/book
 
       - name: Build the Docker image
         run: docker build -t $IMAGE_TAG --target=create-build .
