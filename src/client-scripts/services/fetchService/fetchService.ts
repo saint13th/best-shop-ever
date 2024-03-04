@@ -1,11 +1,20 @@
 import axios from 'axios';
+import * as https from "https";
+import * as fs from 'fs';
 
-const fetchServiceClass = () => {
+export const httpsAgent = new https.Agent({
+    rejectUnauthorized: false,
+    cert: fs.readFileSync('secrets/create-cert.pem'),
+});
+
+export const fetchServiceClass = ({ token }: { token?: string }) => {
     const axiosInstance = axios.create({
+        httpsAgent,
         withCredentials: true,
-        baseURL: '/api/v1',
+        baseURL: 'https://localhost:3000/api/v1',
         headers: {
             'Content-Type': 'application/json',
+            ...(token ? { Authorization: `Bearer ${token}` } : {})
         }
     });
 
@@ -34,4 +43,4 @@ const fetchServiceClass = () => {
     }
 }
 
-export const fetchService = fetchServiceClass();
+export const fetchService = fetchServiceClass({});
