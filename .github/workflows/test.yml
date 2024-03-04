@@ -1,0 +1,41 @@
+name: NestJS API CI
+
+# on:
+#   push:
+#     branches: [main]
+#   pull_request:
+#     branches: [main]
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Tests
+        run: npm test
+        working-directory: src/book
+
+      - name: Build the Docker image
+        run: docker build -t $IMAGE_TAG --target=create-build .
+        
+      - name: Run Prettier
+        run: docker run $IMAGE_TAG sh -c 'npm run format:verify'
+
+      - name: Run ESLint
+        run: docker run $IMAGE_TAG sh -c 'npm run lint'
