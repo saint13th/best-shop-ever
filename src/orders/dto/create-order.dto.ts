@@ -1,5 +1,5 @@
 import { IsNotEmpty } from "class-validator";
-import { Product } from "src/products/schemas/product.schema";
+import { Product } from "../../products/schemas/product.schema";
 
 export class CreateOrderDto {
     @IsNotEmpty()

@@ -9,15 +9,18 @@ import { AppModule } from './app.module';
 import { join } from 'path';
 
 const httpsOptions = {
-  key: fs.readFileSync('./secrets/create-cert-key.pem'),
-  cert: fs.readFileSync('./secrets/create-cert.pem'),
+  key: fs.readFileSync('secrets/create-cert-key.pem'),
+  cert: fs.readFileSync('secrets/create-cert.pem'),
 };
 
 async function bootstrap() {
   const port = 3000;
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    new FastifyAdapter({ logger: true, https: httpsOptions }),
+    new FastifyAdapter({
+      logger: true,
+      https: httpsOptions
+    }),
   );
   const swagDocumentConfig = new DocumentBuilder()
     .setTitle('BSE API')
