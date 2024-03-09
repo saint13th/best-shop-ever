@@ -8,10 +8,10 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { join } from 'path';
 
-// const httpsOptions = {
-//   key: fs.readFileSync('secrets/create-cert-key.pem'),
-//   cert: fs.readFileSync('secrets/create-cert.pem'),
-// };
+const httpsOptions = {
+  key: fs.readFileSync('secrets/create-cert-key.pem'),
+  cert: fs.readFileSync('secrets/create-cert.pem'),
+};
 
 async function bootstrap() {
   const port = 3000;
@@ -19,7 +19,7 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter({
       logger: true,
-      // https: httpsOptions
+      https: httpsOptions
     }),
   );
   const swagDocumentConfig = new DocumentBuilder()
