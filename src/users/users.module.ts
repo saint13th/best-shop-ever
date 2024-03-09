@@ -3,9 +3,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { UserSchema } from './schemas/user.schema';
-import { AuthService } from 'src/auth/auth.service';
-import { LocalStrategy } from 'src/auth/local.strategy';
-import { JwtStrategy } from 'src/auth/jwt.strategy';
+import { AuthService } from '../auth/auth.service';
+import { LocalStrategy } from '../auth/local.strategy';
+import { JwtStrategy } from '../auth/jwt.strategy';
 
 @Module({
   imports: [MongooseModule.forFeature([{ name: 'User', schema: UserSchema }])],

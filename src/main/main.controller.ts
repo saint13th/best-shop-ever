@@ -9,7 +9,7 @@ import { UserRole } from '../users/schemas/user.schema';
 import { UsersService } from '../users/users.service';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { RolesGuard } from '../auth/guards/roles.guard';
-import { ChatService } from 'src/chat/chat.service';
+import { ChatService } from '../chat/chat.service';
 
 
 @ApiTags('main (pages)')
