@@ -19,7 +19,7 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter({
       logger: true,
-      https: httpsOptions
+      // https: httpsOptions
     }),
   );
   const swagDocumentConfig = new DocumentBuilder()
