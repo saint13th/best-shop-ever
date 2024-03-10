@@ -16,6 +16,9 @@ RUN npm install
 # Bundle app source
 COPY . .
 
+# Build client scripts
+RUN npm run rollup-build
+
 # Creates a "dist" folder with the production build
 RUN npm run build
 
