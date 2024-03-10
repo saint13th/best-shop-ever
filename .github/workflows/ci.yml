@@ -1,4 +1,4 @@
-name: test
+name: NestJS CI
 
 on:
   push:
@@ -7,7 +7,8 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  test:
+    name: 'Test'
     runs-on: ubuntu-latest
 
     strategy:
@@ -26,14 +27,12 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-  test:
-    runs-on: ubuntu-latest
-    steps:
       - name: Run Tests
         run: npm test
 
 
   docker:
+    name: 'Docker'
     runs-on: ubuntu-latest
     steps:
       - name: Set up Docker Buildx
@@ -49,4 +48,17 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: rodionovdmitry777/best-shop-ever_app:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/best-shop-ever_app:latest
+
+  deploy:
+    name: 'Deploy'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: jsmrcaga/action-netlify-deploy@master
+        with:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_DEPLOY_MESSAGE: "Prod deploy v${{ github.ref }}"
+          NETLIFY_DEPLOY_TO_PROD: true
