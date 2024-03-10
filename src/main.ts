@@ -8,6 +8,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { join } from 'path';
 
+// TODO: revert
 // const httpsOptions = {
 //   key: fs.readFileSync('secrets/create-cert-key.pem'),
 //   cert: fs.readFileSync('secrets/create-cert.pem'),
