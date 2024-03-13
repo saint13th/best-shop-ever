@@ -4,7 +4,9 @@ import { MongoMemoryServer } from "mongodb-memory-server";
 import { Connection, connect, Model } from "mongoose";
 import { MainController } from './main.controller';
 import { MainService } from './main.service';
+import { ChatService } from '../chat/chat.service';
 import { User, UserSchema } from '../users/schemas/user.schema';
+import { UsersService } from '../users/users.service';
 import { Product, ProductSchema } from '../products/schemas/product.schema';
 import { Cart, CartSchema } from '../cart/schemas/cart.schema';
 import { ProductsService } from '../products/products.service';
@@ -38,6 +40,8 @@ describe('MainController', () => {
         { provide: getModelToken(Cart.name), useValue: cartModel },
         { provide: ProductsService, useValue: jest.fn() },
         { provide: CartService, useValue: jest.fn() },
+        { provide: ChatService, useValue: jest.fn() },
+        { provide: UsersService, useValue: jest.fn() },
       ],
     }).compile();
 

@@ -8,6 +8,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { join } from 'path';
 
+// TODO: revert
 // const httpsOptions = {
 //   key: fs.readFileSync('secrets/create-cert-key.pem'),
 //   cert: fs.readFileSync('secrets/create-cert.pem'),
@@ -57,7 +58,7 @@ async function bootstrap() {
   // @ts-ignore
   await app.register(fastifyCookie);
 
-  await app.listen(port);
+  await app.listen(port, "0.0.0.0");
 }
 
 bootstrap().catch((error) => {

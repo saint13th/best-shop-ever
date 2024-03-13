@@ -8,7 +8,9 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 @ApiTags('chats')
 @Controller('api/v1/chats')
 export class ChatController {
-  constructor(private readonly chatService: ChatService) { }
+  constructor(
+    private readonly chatService: ChatService,
+  ) { }
 
   @UseGuards(JwtAuthGuard)
   @Post()
