@@ -1,0 +1,72 @@
+<nav aria-label="Breadcrumb" class="pt-6">
+    <ol role="list" class="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+        <li>
+            <div class="flex items-center">
+                <a href="/admin" class="mr-2 text-sm font-medium text-gray-900">Админ. панель</a>
+                <svg width="16" height="20" viewBox="0 0 16 20" fill="currentColor" aria-hidden="true"
+                    class="h-5 w-4 text-gray-300">
+                    <path d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z" />
+                </svg>
+            </div>
+        </li>
+        <li>
+            <div class="flex items-center">
+                <a href="#" class="mr-2 text-sm font-medium text-gray-900">
+                    Пользователи (редактирование)
+                </a>
+            </div>
+        </li>
+    </ol>
+</nav>
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <span id="editUserError" class="text-red-900"></span>
+    <span id="editUserSuccess" class="text-green-900"></span>
+    <div class="relative overflow-x-auto space-y-10">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 mt-8">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        Email
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Имя
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Изображение
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Роли
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Редактирование
+                    </th>
+                </tr>
+            </thead>
+            <tbody cl>
+                <% for(var i=0; i<users.length; i++) { %>
+                    <tr
+                        class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 user-row">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <input class="w-52 user-email" type="text" value="<%= users[i].email %>">
+                        </th>
+                        <td class="px-6 py-4">
+                            <input class="w-52 user-name" type="text" value="<%= users[i].name %>">
+                        </td>
+                        <td class="px-6 py-4">
+                            <input class="w-52 user-image" type="text" value="<%= users[i].image %>">
+                        </td>
+                        <td class="px-6 py-4">
+                            <input class="w-52 user-roles" type="text" value="<%= users[i].roles %>">
+                        </td>
+                        <td class="px-6 py-4">
+                            <a data-id="<%=users[i].id %>" href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline edit-button">
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                    <% } %>
+            </tbody>
+        </table>
+    </div>
+
+</div>

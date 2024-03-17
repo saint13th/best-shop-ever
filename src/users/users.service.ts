@@ -30,6 +30,18 @@ export class UsersService {
     return result;
   }
 
+  async findAll(): Promise<User[]> {
+    const users = await this.userModel.find({}, {
+      roles: true, name: true, email: true, image: true
+    });
+
+    if (!users) {
+      throw new NotFoundException('Пользователи не найдены!')
+    }
+
+    return users;
+  }
+
   async findByEmail(email: string): Promise<User> {
     const user = await this.userModel.findOne({ email });
 

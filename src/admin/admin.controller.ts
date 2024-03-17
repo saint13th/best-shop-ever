@@ -5,6 +5,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { UpdateCommentDto } from './dto/update-comment.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UserRole } from '../users/schemas/user.schema';
 import { Roles } from '../auth/decorators/roles.decorator';
@@ -63,5 +64,13 @@ export class AdminController {
   @Delete('/products/:id')
   remove(@Param('id') id: string) {
     return this.adminService.removeProduct(id);
+  }
+
+  // comments --------------------------------------------------------
+  @UseGuards(JwtAuthGuard)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER)
+  @Patch('/comments/:id')
+  updateComment(@Param('id') id: string, @Body() comment: UpdateCommentDto) {
+    return this.adminService.updateComment(id, comment);
   }
 }

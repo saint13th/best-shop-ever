@@ -68,10 +68,12 @@ export class MainService {
     const user = await this.getUser(currentUser?.username, usersService);
     const result = await productService.findAll({ name: productName });
 
+    console.log(result[0])
+
     return {
       productName,
       productTitle: result.at(0).title,
-      comments: result.at(0).comments,
+      comments: result.at(0).comments || [],
       user
     }
   }
@@ -86,5 +88,48 @@ export class MainService {
     const result = await productService.findOneByName(name);
 
     return { ...result, user };
+  }
+
+  async getAdminUsersEditPageData(
+    currentUser = null,
+    usersService: UsersService,
+  ) {
+    const user = await this.getUser(currentUser?.username, usersService);
+    const users = await usersService.findAll();
+
+    console.log({ user, users })
+
+    return {
+      users,
+      user,
+    }
+  }
+
+  async getAdminProductsEditPageData(
+    currentUser = null,
+    productService: ProductsService,
+    usersService: UsersService,
+  ) {
+    const user = await this.getUser(currentUser?.username, usersService);
+    const products = await productService.findAll({});
+
+    return {
+      user,
+      products,
+    }
+  }
+
+  async getAdminCommentsEditPageData(
+    currentUser = null,
+    productService: ProductsService,
+    usersService: UsersService,
+  ) {
+    const user = await this.getUser(currentUser?.username, usersService);
+    const products = await productService.findAllWithComments({});
+
+    return {
+      user,
+      products,
+    }
   }
 }

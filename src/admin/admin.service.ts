@@ -8,6 +8,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { UpdateCommentDto } from './dto/update-comment.dto';
 
 @Injectable()
 export class AdminService {
@@ -78,5 +79,23 @@ export class AdminService {
 
     async removeProduct(id: string) {
         return await this.productModel.findByIdAndDelete(id);
+    }
+
+    async updateComment(id: string, comment: UpdateCommentDto) {
+        return await this.productModel.findOneAndUpdate(
+            { _id: id },
+            {
+                $set: {
+                    'comments.$[e1].userName': comment.userName,
+                    'comments.$[e1].text': comment.text
+                },
+            },
+            {
+                new: true,
+                arrayFilters: [
+                    { "e1._id": comment.commentId }
+                ]
+            }
+        );
     }
 }

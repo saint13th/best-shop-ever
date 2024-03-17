@@ -132,15 +132,54 @@ export class MainController {
     return { user };
   }
 
+  @Get('admin/users/edit')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER)
+  @Render('admin/users/users-edit.ejs')
+  async getAdminUsersEditPage(@Req() request) {
+    const currentUser = { ...request.user };
+    const { user, users } = await this.mainService.getAdminUsersEditPageData(
+      currentUser, this.usersService
+    );
+
+    return { user, users };
+  }
+
   @Get('admin/products-create')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.MANAGER)
   @Render('admin/products/products-create.ejs')
-  async getAdminProductsPage(@Req() request) {
+  async getAdminProductsCreatePage(@Req() request) {
     const currentUser = { ...request.user };
     const user = await this.mainService.getUser(currentUser?.username, this.usersService);
 
     return { user };
+  }
+
+  @Get('admin/products/edit')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER)
+  @Render('admin/products/products-edit.ejs')
+  async getAdminProductsEditPage(@Req() request) {
+    const currentUser = { ...request.user };
+    const { user, products } = await this.mainService.getAdminProductsEditPageData(
+      currentUser, this.productService, this.usersService
+    );
+
+    return { user, products };
+  }
+
+  @Get('admin/comments/edit')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER)
+  @Render('admin/comments/comments-edit.ejs')
+  async getAdminCommentsEditPage(@Req() request) {
+    const currentUser = { ...request.user };
+    const { user, products } = await this.mainService.getAdminCommentsEditPageData(
+      currentUser, this.productService, this.usersService
+    );
+
+    return { user, products };
   }
 
   @Get('admin/chats')

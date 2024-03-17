@@ -28,6 +28,7 @@ export class ProductCommentService {
         return this.productModel.findOneAndUpdate({ name: productName }, {
             $push: {
                 comments: {
+                    _id: new mongoose.Types.ObjectId(),
                     userName,
                     text: commentText,
                 }
