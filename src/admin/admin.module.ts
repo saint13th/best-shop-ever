@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from "@nestjs/mongoose";
+import { MongooseModule } from '@nestjs/mongoose';
 import { AdminService } from './admin.service';
 import { AdminController } from './admin.controller';
 import { UsersModule } from '../users/users.module';
@@ -11,22 +11,20 @@ import { UserSchema } from '../users/schemas/user.schema';
   imports: [
     UsersModule,
     ProductsModule,
-    MongooseModule.forFeature(
-      [{
+    MongooseModule.forFeature([
+      {
         name: 'User',
-        schema: UserSchema
-      }]
-    ),
-    MongooseModule.forFeature(
-      [{
+        schema: UserSchema,
+      },
+    ]),
+    MongooseModule.forFeature([
+      {
         name: 'Product',
-        schema: ProductSchema
-      }]
-    )
+        schema: ProductSchema,
+      },
+    ]),
   ],
   controllers: [AdminController],
-  providers: [
-    AdminService,
-  ],
+  providers: [AdminService],
 })
-export class AdminModule { }
+export class AdminModule {}

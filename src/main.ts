@@ -3,7 +3,10 @@ import { NestFactory } from '@nestjs/core';
 import helmet from '@fastify/helmet';
 import { fastifyCookie } from '@fastify/cookie';
 import { Logger, ValidationPipe } from '@nestjs/common';
-import { NestFastifyApplication, FastifyAdapter } from '@nestjs/platform-fastify';
+import {
+  NestFastifyApplication,
+  FastifyAdapter,
+} from '@nestjs/platform-fastify';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { join } from 'path';
@@ -31,7 +34,7 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, swagDocumentConfig);
 
-  fs.writeFileSync("./swagger-spec.json", JSON.stringify(document));
+  fs.writeFileSync('./swagger-spec.json', JSON.stringify(document));
 
   SwaggerModule.setup('api', app, document);
 
@@ -50,15 +53,17 @@ async function bootstrap() {
   });
   app.enableCors({
     origin: true,
-    credentials: true
+    credentials: true,
   });
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   app.register(helmet);
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   await app.register(fastifyCookie);
 
-  await app.listen(port, "0.0.0.0");
+  await app.listen(port, '0.0.0.0');
 }
 
 bootstrap().catch((error) => {

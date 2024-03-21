@@ -33,4 +33,4 @@ import { ChatModule } from './chat/chat.module';
   controllers: [],
   providers: [],
 })
-export class AppModule { }
+export class AppModule {}

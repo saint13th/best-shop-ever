@@ -1,4 +1,14 @@
-import { Controller, Delete, Get, Post, Body, Param, Patch, UseGuards, Query } from '@nestjs/common';
+import {
+  Controller,
+  Delete,
+  Get,
+  Post,
+  Body,
+  Param,
+  Patch,
+  UseGuards,
+  Query,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AdminService } from './admin.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -13,7 +23,7 @@ import { Roles } from '../auth/decorators/roles.decorator';
 @ApiTags('admin')
 @Controller('api/v1/admin')
 export class AdminController {
-  constructor(private readonly adminService: AdminService) { }
+  constructor(private readonly adminService: AdminService) {}
 
   // users ---------------------------------------------------------
   @UseGuards(JwtAuthGuard)
@@ -72,5 +82,15 @@ export class AdminController {
   @Patch('/comments/:id')
   updateComment(@Param('id') id: string, @Body() comment: UpdateCommentDto) {
     return this.adminService.updateComment(id, comment);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER)
+  @Delete('/comments/:productId/:commentId')
+  deleteComment(
+    @Param('productId') productId: string,
+    @Param('commentId') commentId: string,
+  ) {
+    return this.adminService.deleteComment(productId, commentId);
   }
 }

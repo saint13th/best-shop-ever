@@ -1,12 +1,10 @@
 import { IsString } from 'class-validator';
 
-export class UpdateCommentDto {
+export class DeleteCommentDto {
   @IsString()
   commentId: string;
 
   @IsString()
-  userName: string;
+  productId: string;
 
-  @IsString()
-  text: string;
 }
