@@ -1,10 +1,21 @@
-import { Controller, Delete, Get, Post, Body, Param, Patch, UseGuards, Query } from '@nestjs/common';
+import {
+  Controller,
+  Delete,
+  Get,
+  Post,
+  Body,
+  Param,
+  Patch,
+  UseGuards,
+  Query,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AdminService } from './admin.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { UpdateCommentDto } from './dto/update-comment.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UserRole } from '../users/schemas/user.schema';
 import { Roles } from '../auth/decorators/roles.decorator';
@@ -12,7 +23,7 @@ import { Roles } from '../auth/decorators/roles.decorator';
 @ApiTags('admin')
 @Controller('api/v1/admin')
 export class AdminController {
-  constructor(private readonly adminService: AdminService) { }
+  constructor(private readonly adminService: AdminService) {}
 
   // users ---------------------------------------------------------
   @UseGuards(JwtAuthGuard)
@@ -63,5 +74,23 @@ export class AdminController {
   @Delete('/products/:id')
   remove(@Param('id') id: string) {
     return this.adminService.removeProduct(id);
+  }
+
+  // comments --------------------------------------------------------
+  @UseGuards(JwtAuthGuard)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER)
+  @Patch('/comments/:id')
+  updateComment(@Param('id') id: string, @Body() comment: UpdateCommentDto) {
+    return this.adminService.updateComment(id, comment);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER)
+  @Delete('/comments/:productId/:commentId')
+  deleteComment(
+    @Param('productId') productId: string,
+    @Param('commentId') commentId: string,
+  ) {
+    return this.adminService.deleteComment(productId, commentId);
   }
 }

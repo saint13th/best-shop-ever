@@ -8,39 +8,40 @@ import axios from 'axios';
 // });
 
 export const fetchServiceClass = ({ token }: { token?: string }) => {
-    const axiosInstance = axios.create({
-        // httpsAgent,
-        withCredentials: true,
-        baseURL: '/api/v1',
-        headers: {
-            'Content-Type': 'application/json',
-            ...(token ? { Authorization: `Bearer ${token}` } : {})
-        }
-    });
+  const axiosInstance = axios.create({
+    // httpsAgent,
+    withCredentials: true,
+    baseURL: '/api/v1',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+  });
 
-    const handleRequest = async (method, url, params = {}) => {
-        return axiosInstance[method](url, params)
-            .then((response) => ({ result: response.data }))
-            .catch((error) => ({ error: error.message }))
-    }
+  const handleRequest = async (method, url, params = {}) => {
+    return axiosInstance[method](url, params)
+      .then((response) => ({ result: response.data }))
+      .catch((error) => ({ error: error.message }));
+  };
 
-    const get = ({ url, params = null }) => handleRequest('get', url, params);
+  const get = ({ url, params = null }) => handleRequest('get', url, params);
 
-    const post = ({ url, params }) => handleRequest('post', url, params);
+  const post = ({ url, params }) => handleRequest('post', url, params);
 
-    const put = ({ url, params }) => handleRequest('put', url, params);
+  const put = ({ url, params }) => handleRequest('put', url, params);
 
-    const patch = ({ url, params }) => handleRequest('patch', url, params);
+  const patch = ({ url, params }) => handleRequest('patch', url, params);
 
-    const deleteRequest = ({ url, params }) => handleRequest('delete', url, params = null)
+  const deleteRequest = ({ url, params }) =>
+    handleRequest('delete', url, params);
 
-    return {
-        get,
-        post,
-        put,
-        patch,
-        deleteRequest,
-    }
-}
+  return {
+    get,
+    post,
+    put,
+    patch,
+    deleteRequest,
+  };
+};
 
 export const fetchService = fetchServiceClass({});

@@ -21,15 +21,40 @@ export class ProductsService {
     // TODO page, limit
 
     const queries = {
-        ...(id ? { id } : {}),
-        ...(title ? { title } : {}),
-        ...(name ? { name } : {}),
-        ...(price ? { price } : {}),
-        ...(rating ? { rating} : {}),
-        ...(image ? { image } : {})
+      ...(id ? { id } : {}),
+      ...(title ? { title } : {}),
+      ...(name ? { name } : {}),
+      ...(price ? { price } : {}),
+      ...(rating ? { rating } : {}),
+      ...(image ? { image } : {})
     };
 
     const products = await this.productModel.find(queries);
+
+    return products;
+  }
+
+  async findAllWithComments(query: any): Promise<Product[]> {
+    const id = query?.id || null;
+    const title = query?.title || null;
+    const name = query?.name || null;
+    const price = query?.price || null;
+    const rating = query?.rating || null;
+    const image = query?.image || null;
+
+    const queries = {
+      ...(id ? { id } : {}),
+      ...(title ? { title } : {}),
+      ...(name ? { name } : {}),
+      ...(price ? { price } : {}),
+      ...(rating ? { rating } : {}),
+      ...(image ? { image } : {})
+    };
+
+    const products = await this.productModel.find(queries, {
+      title: true,
+      comments: true,
+    });
 
     return products;
   }

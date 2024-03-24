@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { getModelToken } from "@nestjs/mongoose";
-import { MongoMemoryServer } from "mongodb-memory-server";
-import { Connection, connect, Model } from "mongoose";
+import { getModelToken } from '@nestjs/mongoose';
+import { MongoMemoryServer } from 'mongodb-memory-server';
+import { Connection, connect, Model } from 'mongoose';
 import { AdminController } from './admin.controller';
 import { AdminService } from './admin.service';
 import { User, UserSchema } from '../users/schemas/user.schema';
@@ -18,7 +18,7 @@ describe('AdminController', () => {
     mongod = await MongoMemoryServer.create();
 
     const uri = mongod.getUri();
-    
+
     mongoConnection = (await connect(uri)).connection;
     userModel = mongoConnection.model(User.name, UserSchema);
     productModel = mongoConnection.model(Product.name, ProductSchema);
@@ -27,8 +27,8 @@ describe('AdminController', () => {
       controllers: [AdminController],
       providers: [
         AdminService,
-        {provide: getModelToken(User.name), useValue: userModel},
-        {provide: getModelToken(Product.name), useValue: productModel},
+        { provide: getModelToken(User.name), useValue: userModel },
+        { provide: getModelToken(Product.name), useValue: productModel },
       ],
     }).compile();
 
